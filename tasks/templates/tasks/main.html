@@ -1,0 +1,143 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ToDo App</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+    </head>
+
+    <body>       
+        {% include 'tasks/navbar.html'%}
+        <div class="container-fluid">
+            <hr>
+            {% block content %} 
+        
+        
+            {% endblock %}
+        </div>
+        <hr>
+
+
+        <footer class="page-footer font-small special-color-dark pt-4" style="bottom: 0; padding-top: 20px;">
+
+
+          <div class="container-fluid text-center text-md-left">
+
+            <!-- Grid row -->
+            <div class="row">
+        
+              <!-- Grid column -->
+              <div class="col-md-6 mt-md-0 mt-3">
+        
+                <!-- Content -->
+                <h5 class="text-uppercase">Why Choose Us?</h5>
+                <p>We help people to organize their tasks in day-to-day working life.</p>
+        
+              </div>
+        
+              <hr class="clearfix w-100 d-md-none pb-3">
+        
+              <!-- Grid column -->
+              
+              <div class="col-md-3 mb-md-0 mb-3">
+
+                <h5 class="text-uppercase">Features</h5>
+        
+                <ul class="list-unstyled">
+                  <li>
+                    <span><a href="{% url 'Pricing' %}">Pricing</a></span>
+                  </li>
+                  <li>
+                    <span><a href="{% url 'Premium' %}">Premium</a></span>
+                  </li>
+                </ul>
+        
+              </div>
+
+
+              <div class="col-md-3 mb-md-0 mb-3">
+        
+                <h5 class="text-uppercase">COMPANY</h5>
+        
+                <ul class="list-unstyled">
+                  <li>
+                    <span><a href="{% url 'AboutUs' %}">About Us</a></span>
+                  </li>
+                  <li>
+                    <span><a href="{% url 'Team' %}">Our Team</a></span>
+                  </li>
+                  <li>
+                    <span><a href="{% url 'PrivacyPolicy' %}">Privacy Policy</a></span>
+                  </li>
+                  <li>
+                    <span><a href="{% url 'ContactUs' %}">Contact Us</a></span>
+                  </li>
+                </ul>
+        
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <br>
+          <br>
+          <br>
+            <!-- Social buttons -->
+            <ul class="list-unstyled list-inline text-center">
+              <li class="list-inline-item">
+                <a class="btn-floating btn-fb mx-1" href="https://www.facebook.com">
+                  <i class="fa fa-facebook-square white-text mr-md-3 mr-3 fa-2x "> </i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn-floating btn-tw mx-1" href="https://www.twitter.com">
+                  <i class="fa fa-twitter-square white-text mr-md-3 mr-3 fa-2x"> </i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn-floating btn-gplus mx-1" href="https://www.googleplus.com">
+                  <i class="fa fa-google-plus-square white-text mr-md-3 mr-3 fa-2x"> </i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn-floating btn-li mx-1" href="https://www.linkedin.com">
+                  <i class="fa fa-linkedin-square white-text mr-md-3 mr-3 fa-2x"> </i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn-floating btn-in mx-1" href="https://www.instagram.com">
+                  <i class="fa fa-instagram white-text mr-md-3 mr-3 fa-2x"> </i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a class="btn-floating btn-pin mx-1" href="https://www.pinterest.com">
+                  <i class="fa fa-pinterest white-text mr-md-3 mr-3 fa-2x"> </i>
+                </a>
+              </li>
+            </ul>
+        
+          </div>
+          
+        
+          <div class="footer-copyright text-center py-3">© 2020 Copyright:
+            <a href="https://ToDoApp.com/"> ToDoApp.com</a>
+          </div>
+        
+        </footer>
+        
+
+    </body>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</html>

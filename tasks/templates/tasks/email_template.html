@@ -1,0 +1,15 @@
+{% autoescape off %}
+
+
+Hey {{name}}
+
+Welcome to ToDoApp, 
+
+Complete the this step to register your account, by clicking the link given below :
+
+http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+Best regards from,
+ToDoApp Team.
+
+{% endautoescape %}

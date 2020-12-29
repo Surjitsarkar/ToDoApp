@@ -1,0 +1,49 @@
+{% extends 'tasks/main.html' %}
+
+{% block content %}
+
+<style>
+    #id_description{
+        height: 200px;
+        width: 300px;
+    }
+
+    #id_title{
+        height: 50px;
+        width: 300px;
+    }
+</style>
+
+<div class="center-column">
+
+    <h3>YOUR LIST OF TASKS</h3>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        <p style="padding-left: 25px;">Title: {{form.title}} <span style="padding-left: 15px;">Complete:{{form.complete}}</span></p>   
+        <p>Description: {{form.description}}</p>
+        <input class="btn btn-col btn-primary" type="submit" name="Create Task">
+    </form>
+        {% for Task in TASKS %}
+            <div class="item-row">
+                <a class="btn btn-sm btn-info" href="{% url 'update_task' Task.id %}">Update</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'delete' Task.id %}">Delete</a>
+    
+                {% if Task.complete == True %}
+                <br>
+                <strike>{{Task.title}}</strike>
+                <br>
+                <br>
+                <strike>{{Task.description}}</strike>
+                {% else %}
+                <br>
+                <span>{{Task.title}}</span>
+                <br>
+                <br>
+                <span>{{Task.description}}</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+</div>
+
+{% endblock %}
