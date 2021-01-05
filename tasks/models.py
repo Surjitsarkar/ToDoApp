@@ -54,8 +54,12 @@ class MyUserManager(BaseUserManager):
 class MyUser(AbstractBaseUser, PermissionsMixin):
     #user = models.OneToOneField(MyUser, null=True, blank=True, on_delete=models.CASCADE, related_name='myuser')
     username = models.CharField(max_length=200)
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
+    firstname = models.CharField(max_length=200)
+    lastname = models.CharField(max_length=200)
+
+    password = models.CharField(max_length=16)
+    
+    confirm_password = models.CharField(max_length=16)
 
     email = models.EmailField(max_length=200)
     
@@ -118,3 +122,19 @@ class Task(models.Model):
 
     def task_description(self):
         return self.description
+    
+    class Meta:
+        ordering = ['-date_created']
+
+
+class SMTPTable(models.Model):
+    name = models.CharField(max_length=120, unique=True)
+    backend = models.CharField(max_length=500)
+    host = models.CharField(max_length=500)
+    port = models.IntegerField()
+    tls = models.BooleanField(default=True)
+    user = models.EmailField(max_length=200)
+    user_password = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name

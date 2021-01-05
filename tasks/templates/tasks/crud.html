@@ -1,0 +1,92 @@
+{% block content %}
+<div class="container">
+    
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <h4 class="modal-title" id="myModalLabel">Update Task</h4>
+        </div>
+        <form id="updateUser" action="">
+        <div class="modal-body">
+            <input class="form-control" id="form-id" type="hidden" name="formId"/>
+            <label for="name">Title</label>
+            <input class="form-control" id="form-name" type="text" name="formName"/>
+            <label for="address">Description</label>
+            <input class="form-control" id="form-address" type="text" name="formAddress"/>
+            <label for="age">Complete</label>
+            <input class="form-control" id="form-age" type="number" name="formAge" min=10 max=100/>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" >Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascript %}
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+$("form#updateUser").submit(function() {
+  var idInput = $('input[name="formId"]').val().trim();
+  var nameInput = $('input[name="formName"]').val().trim();
+  var addressInput = $('input[name="formAddress"]').val().trim();
+  var ageInput = $('input[name="formAge"]').val().trim();
+  if (nameInput && addressInput && ageInput) {
+      // Create Ajax Call
+      $.ajax({
+          url: '{% url "crud_ajax_update" %}',
+          data: {
+              'id': idInput,
+              'name': nameInput,
+              'address': addressInput,
+              'age': ageInput
+          },
+          dataType: 'json',
+          success: function (data) {
+              if (data.user) {
+                updateToUserTabel(data.user);
+              }
+          }
+      });
+     } else {
+      alert("All fields must have a valid value.");
+  }
+  $('form#updateUser').trigger("reset");
+  $('#myModal').modal('hide');
+  return false;
+});
+
+// Update Django Ajax Call
+function editUser(id) {
+if (id) {
+  tr_id = "#user-" + id;
+  name = $(tr_id).find(".userName").text();
+  address = $(tr_id).find(".userAddress").text();
+  age = $(tr_id).find(".userAge").text();
+  $('#form-id').val(id);
+  $('#form-name').val(name);
+  $('#form-address').val(address);
+  $('#form-age').val(age);
+}
+}
+function updateToUserTabel(user){
+  $("#userTable #user-" + user.id).children(".userData").each(function() {
+      var attr = $(this).attr("name");
+      if (attr == "name") {
+        $(this).text(user.name);
+      } else if (attr == "address") {
+        $(this).text(user.address);
+      } else {
+        $(this).text(user.age);
+      }
+    });
+}
+
+{% endblock javascript %}

@@ -18,17 +18,18 @@
 
     <h3>YOUR LIST OF TASKS</h3>
 
-    <form method="POST" action="">
+    <form method="POST" action="" id="createTasks" data-url="{% url 'user' %}">
         {% csrf_token %}
         <p style="padding-left: 25px;">Title: {{form.title}} <span style="padding-left: 15px;">Complete:{{form.complete}}</span></p>   
         <p>Description: {{form.description}}</p>
-        <input class="btn btn-col btn-primary" type="submit" name="Create Task">
-    </form>
+        <button class="btn btn-col btn-primary" type="submit">Create Task</button>
+
+
         {% for Task in TASKS %}
             <div class="item-row">
-                <a class="btn btn-sm btn-info" href="{% url 'update_task' Task.id %}">Update</a>
+                <a class="btn btn-sm btn-info" href="{% url 'update' Task.id %}">Update</a>
                 <a class="btn btn-sm btn-danger" href="{% url 'delete' Task.id %}">Delete</a>
-    
+
                 {% if Task.complete == True %}
                 <br>
                 <strike>{{Task.title}}</strike>
@@ -44,6 +45,22 @@
                 {% endif %}
             </div>
         {% endfor %}
+
+    </form>
+
+    
+        <div class="col-12 mt-5" id="showTasks">
+            {% for Task in MYTASKS %}
+            <div class="item-row" id="tasksrow" data-id="{{ Task.id }}">
+                <span>{{Task.title}}</span>
+                <br>
+                <br>
+                <span>{{Task.description}}</span>
+            </div>
+        {% endfor %}
+        </div>
+
+
 </div>
 
 {% endblock %}
