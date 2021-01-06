@@ -52,7 +52,6 @@ def registerPage(request):
             user = MyUser.objects.get(pk=user_pk)
 
             email_settings = SMTPTable.objects.get(name='registration')
-            print("BACKEND --------->:", email_settings.backend)
             my_backend = email_settings.backend
             my_host = email_settings.host
             my_port = email_settings.port
@@ -74,6 +73,7 @@ def registerPage(request):
                             username=my_user, 
                             password=myuser_password, 
                             use_tls=my_tls)
+            print("Conn ------>",connection)
             connection.open()
             email_registartion = mail.EmailMessage(email_subject,message,my_user,[user_email],connection=connection)
             email_registartion.send()
@@ -141,10 +141,35 @@ def home(request):
 def updateTask(request, pk):
     task = Task.objects.get(id=pk)
     form  = TaskForm(instance=task)
+
+    user_name = request.user.firstname
+    user_mail = request.user.email
+
+    email_settings = SMTPTable.objects.get(name="create_and_update")
+    my_backend = email_settings.backend
+    my_host = email_settings.host
+    my_port = email_settings.port
+    my_user = email_settings.user
+    myuser_password = email_settings.user_password
+    my_tls = email_settings.tls
+
     if request.method == 'POST':
         form = TaskForm(request.POST, instance=task)
         if form.is_valid:
             form.save()
+
+            email_subject = 'Update in your ToDo Task'
+            message = render_to_string('tasks/email_template_update.html',{'name':user_name})
+
+            connection = mail.get_connection(backend=my_backend,host=my_host, 
+                            port=my_port, 
+                            username=my_user, 
+                            password=myuser_password, 
+                            use_tls=my_tls)
+            connection.open()
+            email_login = mail.EmailMessage(email_subject,message,my_user,[user_mail],connection=connection)
+            email_login.send()
+            connection.close()
             return redirect('user')
     
     context = {'form':form}
@@ -169,12 +194,36 @@ def userPage(request):
 
     form = TaskForm()
 
+    user_mail = request.user.email
+    user_name = request.user.firstname
+
+    email_settings = SMTPTable.objects.get(name="create_and_update")
+    my_backend = email_settings.backend
+    my_host = email_settings.host
+    my_port = email_settings.port
+    my_user = email_settings.user
+    myuser_password = email_settings.user_password
+    my_tls = email_settings.tls
+
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid:
             Task_form = form.save(commit=False)
             Task_form.my_user = request.user
             Task_form.save()
+
+            email_subject = 'New Creation of task in your ToDo Task'
+            message = render_to_string('tasks/email_template_create.html',{'name':user_name})
+
+            connection = mail.get_connection(backend=my_backend,host=my_host, 
+                            port=my_port, 
+                            username=my_user, 
+                            password=myuser_password, 
+                            use_tls=my_tls)
+            connection.open()
+            email_login = mail.EmailMessage(email_subject,message,my_user,[user_mail],connection=connection)
+            email_login.send()
+            connection.close()
         return redirect('user')
 
     context ={'TASKS':tasks, 'form':form}
